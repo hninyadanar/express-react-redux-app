@@ -10,14 +10,18 @@ class NewPost extends React.Component {
         this.state = {
             content: ''
         }
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ content: event.target.value })
     }
 
     savePost(e) {
         e.preventDefault();
         var post = {
-            content: this.refs.content.value
+            content: this.state.content
         }
-
         this.props.dispatch(actions.addPostRequest(post));
         this.setState({ content: '' });
 
@@ -28,8 +32,7 @@ class NewPost extends React.Component {
             <div>
                 <form onSubmit={this.savePost} className="signup-form">
                     <h3> New Post </h3>
-                    <textarea type="text" ref="content" value={this.state.content}
-                    onChange={(e, newValue) => this.setState({ content: newValue })} > </textarea> <br />
+                    <textarea type="text" value={this.state.content} onChange={this.handleChange}></textarea> <br />
                     <button type="submit"> Post </button>
                 </form>
             </div>

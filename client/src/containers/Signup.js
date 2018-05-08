@@ -6,15 +6,36 @@ import actions from '../actions';
 class Signup extends React.Component {
     constructor(props) {
         super(props);
+
+        this.username = null;
+        this.email = null;
+        this.password = null;
+
+        this.setUsernameRef = element => {
+            this.username = element;
+        };
+
+        this.setEmailRef = element => {
+            this.email = element;
+        }
+
+        this.setPasswordRef = element => {
+            this.password = element;
+        }
+
         this.submitForm = this.submitForm.bind(this);
     }
 
     submitForm(e) {
+        if (this.username) this.username.focus();
+        if (this.email) this.email.focus();
+        if (this.password) this.password.focus();
+
         e.preventDefault();
         var user = {
-            username: this.refs.username.value,
-            email: this.refs.email.value,
-            password: this.refs.password.value
+            username: this.username.value,
+            email: this.email.value,
+            password: this.password.value
         }
 
         this.props.dispatch(actions.signupRequest(user));
@@ -29,15 +50,15 @@ class Signup extends React.Component {
                     <tbody>
                         <tr>
                             <td> Username: </td>
-                            <td> <input type="text" ref="username" /> </td>
+                            <td> <input type="text" ref={this.setUsernameRef} /> </td>
                         </tr>
                         <tr>
                             <td> Email: </td>
-                            <td> <input type="email" ref="email" /> </td>
+                            <td> <input type="email" ref={this.setEmailRef} /> </td>
                         </tr>
                         <tr>
                             <td> Password: </td>
-                            <td> <input type="password" ref="password" /> </td>
+                            <td> <input type="password" ref={this.setPasswordRef} /> </td>
                         </tr>
                         <tr>
                             <td colSpan="2" align="right"><button type="submit"> signup </button></td>

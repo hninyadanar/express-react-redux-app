@@ -6,14 +6,27 @@ import actions from '../actions';
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        this.email = null;
+        this.password = null;
+
+        this.setEmailRef = element => {
+            this.email = element;
+        }
+
+        this.setPasswordRef = element => {
+            this.password = element;
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(e) {
+        if(this.email) this.email.focus();
+        if(this.password) this.password.focus();
+
         e.preventDefault();
         var loginData = {
-            email: this.refs.email.value,
-            password: this.refs.password.value
+            email: this.email.value,
+            password: this.password.value
         }
 
         this.props.dispatch(actions.loginRequest(loginData));
@@ -29,12 +42,12 @@ class Login extends React.Component {
                         <tr>
                             <td> Email: </td>
                             <td>
-                                <input type="email" ref="email" />
+                                <input type="email" ref={this.setEmailRef} />
                             </td>
                         </tr>
                         <tr>
                             <td> Password: </td>
-                            <td> <input type="password" ref="password" /> </td>
+                            <td> <input type="password" ref={this.setPasswordRef} /> </td>
                         </tr>
                         <tr>
                             <td colSpan="2" align="right">

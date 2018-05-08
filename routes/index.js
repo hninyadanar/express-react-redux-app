@@ -1,32 +1,18 @@
-var express = require('express');
-var router = express.Router();
-var signUpController = require('../api/controllers/SignUpController');
-var loginController = require('../api/controllers/LoginController');
-var postController = require('../api/controllers/PostController');
-var userRepository = require('../api/db/repository/UserRepository');
-var postRepository = require('../api/db/repository/PostRepository');
-var authController = require('../api/controllers/AuthController');
+const express = require('express');
+const router = express.Router();
 
-
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const SignUpController = require('../api/controllers/SignUpController');
+const PostController = require('../api/controllers/PostController');
+const AuthController = require('../api/controllers/AuthController');
 
 
 /*SignUp*/
-router.get('/api/signup', signUpController.showSignUpForm);
-router.post('/api/signup', userRepository.createUser);
-
-/*Login*/
-router.get('/login', loginController.showLoginForm);
-//router.post('/login', loginController.login);
+router.post('/api/signup', SignUpController.signUp);
 
 /*Post*/
-router.get('/post', postController.showPostForm);
-router.post('/api/post/create', postRepository.savePost);
-router.get('/api/posts', postRepository.getAllPosts);
+router.post('/api/post/create', PostController.savePost);
+router.get('/api/posts', PostController.showAllPosts);
 
 /*PostLikes*/
-router.post('/api/post/like', authController.ensureSignedIn, postRepository.savePostLike, postRepository.updateCount);
+router.post('/api/post/like', AuthController.ensureSignedIn, PostController.savePostLike, PostController.updateCount);
 module.exports = router;

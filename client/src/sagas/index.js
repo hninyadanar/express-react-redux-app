@@ -88,6 +88,8 @@ function* watchPostLike() {
 function* addPost(postData) {
     try {
         const result = yield call(api.addPost, postData.payload);
+        console.log("INDEX SAGA");
+        console.log(result);
         yield put({ type: ADD_POST_SUCCESS, payload: result });
     } catch (err) {
         //error handling

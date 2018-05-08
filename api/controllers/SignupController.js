@@ -1,8 +1,11 @@
 var models = require('../db/models');
+const UserRepository = require('../db/repository/UserRepository');
 
 module.exports = {
-    showSignUpForm: function (req, res, next) {
-        res.render('signup');
-    } 
+
+    async signUp(req, res, next) {
+        UserRepository.createUser({ ...req.body });
+        res.json("success");
+    }
 }
 

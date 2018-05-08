@@ -1,26 +1,20 @@
 var models = require('../models');
+const User = models.User;
 
 
 module.exports = {
-    createUser: function(req, res, next) {
-        models.User.create({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-        }).then(function (user) {
-            res.redirect('/api/login');
-        });
+    async createUser(user) {
+        User.create(user);
     },
 
-    findByEmail(email) {
-        return models.User.findOne({
+    async findByEmail(email) {
+        return User.findOne({
             where: { email: email }
         })
-
     },
 
-    findById(id) {
-        return models.User.findOne(
+    async findById(id) {
+        return User.findOne(
             { where: { id: id } })
     }
 
