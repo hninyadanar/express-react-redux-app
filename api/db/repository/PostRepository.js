@@ -37,5 +37,9 @@ module.exports = {
         return post.increment('like_count', { by: 1 })
     },
 
+    async likedPosts(options) {
+        return PostLike.findAll(options);
+    }
+
 }
 

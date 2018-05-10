@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import actions from '../actions';
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 
 class NewPost extends React.Component {
@@ -29,10 +31,9 @@ class NewPost extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.savePost} className="signup-form">
-                    <h3> New Post </h3>
-                    <textarea type="text" value={this.state.content} onChange={this.handleChange}></textarea> <br />
+            <div align="right">
+                <form onSubmit={this.savePost}>
+                    <TextArea type="Input.TextArea" value={this.state.content} onChange={this.handleChange} placeholder="New Post"></TextArea>
                     <button type="submit"> Post </button>
                 </form>
             </div>

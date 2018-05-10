@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import actions from '../actions';
+import { Icon, Button } from 'antd';
+import '../index.css';
 
 class Post extends React.Component {
     constructor(props) {
@@ -16,23 +18,31 @@ class Post extends React.Component {
         this.props.dispatch(actions.postLikeRequest(data));
     }
 
+
+
     render() {
+        const likedPosts = this.props.likedPosts;
+        const likedPost = likedPosts.find(
+            post => post.post_id === this.props.post.id
+        );
+
+        let icon = <Icon type="like" onClick={this.postLike} />;
+        if (likedPost) {
+            icon = <Icon type="like" onClick={this.postLike} style={{ color: 'blue' }} />
+        }
+
         return (
             <div>
-                <div>
-                    <p>
-                        &nbsp;{this.props.post.content} <br />
-                        <font size="2" color="red"> created by {this.props.post.User.username} </font><br/>
-                        <button onClick={this.postLike}>Like</button>
-                        <span>&nbsp;{this.props.post.like_count}</span>
-                    </p>
-                </div>
-                <br />
+                {this.props.post.content} <br />
+                created by <font color="blue"> {this.props.post.User.username} </font><br />
+                {icon}
+                <span>&nbsp;{this.props.post.like_count}</span>
             </div>
         )
+
+
     }
 }
-
 
 const mapDispatchToProps = dispatch => ({
     dispatch: action => dispatch(action)

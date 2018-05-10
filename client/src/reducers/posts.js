@@ -5,6 +5,8 @@ import {
     ADD_POST_SUCCESS,
     POST_LIKE_REQUEST,
     POST_LIKE_SUCCESS,
+    LIKED_POSTS_REQUEST,
+    LIKED_POSTS_SUCCESS
 } from '../actions/types';
 import { stat } from 'fs';
 
@@ -16,6 +18,9 @@ export default function posts(state = {
     addPostSuccess: false,
     postLikeRequest: false,
     postLikeSuccess: false,
+    likedPostsRequest: false,
+    likedPostsSuccess: false,
+    likedPosts: [],
 }, action) {
     switch (action.type) {
         case POSTS_FETCH_REQUEST:
@@ -40,12 +45,23 @@ export default function posts(state = {
         case 'POST_LIKE_REQUEST':
             return { ...state, postLikeRequest: true }
         case 'POST_LIKE_SUCCESS':
-
             var posts = state.list.slice();
             posts[posts.findIndex(post => post.id === action.payload.id)] = action.payload;
+            var likedPost = { post_id: action.payload.id };
             return {
                 ...state,
-                list: [ ...posts]
+                likedPostId: action.payload.id,
+                likedPosts: [...state.likedPosts, likedPost],
+                list: [...posts],
+            }
+
+        case 'LIKED_POSTS_REQUEST':
+            return { ...state, likedPostsRequest: true }
+        case 'LIKED_POSTS_SUCCESS':
+            return {
+                ...state,
+                likedPosts: action.payload,
+                likedPostsSuccess: true
             }
 
         default: return state

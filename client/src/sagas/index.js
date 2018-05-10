@@ -11,7 +11,9 @@ import {
     ADD_POST_REQUEST,
     ADD_POST_SUCCESS,
     LOGOUT_REQUEST,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    LIKED_POSTS_REQUEST,
+    LIKED_POSTS_SUCCESS
 } from '../actions/types';
 import api from '../services/api';
 import { push } from 'react-router-redux';
@@ -19,7 +21,11 @@ import { push } from 'react-router-redux';
 function* fetchPosts() {
     try {
         const result = yield call(api.fetchPosts);
-        yield put({ type: POSTS_FETCHED, payload: result });
+        if (result.status === 401 || result.status === 403) {
+            yield put(push('/login'));
+        }
+        const posts = yield result.json();
+        yield put({ type: POSTS_FETCHED, payload: posts });
     } catch (err) {
 
     }
@@ -58,7 +64,6 @@ function* watchLogin() {
 }
 
 function* logout() {
-    console.log("***** logout saga *****");
     try {
         yield call(api.logout);
         yield put({ type: LOGOUT_SUCCESS });
@@ -75,7 +80,11 @@ function* watchLogout() {
 function* postLike(data) {
     try {
         const result = yield call(api.postLike, data.payload);
-        yield put({ type: POST_LIKE_SUCCESS, payload: result });
+        if (result.status === 401 || result.status === 403) {
+            yield put(push('/login'));
+        }
+        const post = yield result.json();
+        yield put({ type: POST_LIKE_SUCCESS, payload: post });
     } catch (err) {
 
     }
@@ -85,12 +94,32 @@ function* watchPostLike() {
     yield takeEvery(POST_LIKE_REQUEST, postLike);
 }
 
+function* likedPosts() {
+    try {
+        const result = yield call(api.likedPosts);
+        if (result.status === 401 || result.status === 403) {
+            yield put(push('/login'));
+        }
+        const likedPost = yield result.json();
+        yield put({ type: LIKED_POSTS_SUCCESS, payload: likedPost });
+
+    } catch (err) {
+
+    }
+}
+
+function* watchLikedPosts() {
+    yield takeEvery(LIKED_POSTS_REQUEST, likedPosts);
+}
+
 function* addPost(postData) {
     try {
         const result = yield call(api.addPost, postData.payload);
-        console.log("INDEX SAGA");
-        console.log(result);
-        yield put({ type: ADD_POST_SUCCESS, payload: result });
+        if (result.status === 401 || result.status === 403) {
+            yield put(push('/login'));
+        }
+        const newPost = yield result.json();
+        yield put({ type: ADD_POST_SUCCESS, payload: newPost });
     } catch (err) {
         //error handling
     }
@@ -106,5 +135,6 @@ export default function* rootSaga() {
     watchLogin(),
     watchLogout(),
     watchPostLike(),
+    watchLikedPosts(),
     watchAddPost()]);
 }

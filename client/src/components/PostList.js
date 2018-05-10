@@ -1,30 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Post from '../containers/Post';
-
-/*const PostList = ({ posts }) => (
-    <div>
-        {posts.map(post =>
-            <Post
-                key={post.id} post={post}>
-            </Post>
-        )}
-    </div>
-)*/
+import { List } from 'antd';
 
 class PostList extends React.Component {
     render() {
         const posts = this.props.posts;
-        console.log("****");
-        console.log(posts);
+
         return (
-            <div>
-                {posts.map(post =>
-                    <Post
-                        key={post.id} post={post}>
-                    </Post>
-                )}
-            </div>
+            <List
+                itemLayout="horizontal"
+                dataSource={posts}
+                renderItem={post => (
+                    <List.Item>
+                        <Post
+                            key={post.id} post={post} likedPosts={this.props.likedPosts}>
+                        </Post>
+                    </List.Item>
+                )} />
         )
     }
 

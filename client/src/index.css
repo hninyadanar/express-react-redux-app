@@ -21,3 +21,7 @@ body {
   padding: 5px;
   margin: 5px;
 }
+
+.anticon-like:hover {
+  color: blue;
+}

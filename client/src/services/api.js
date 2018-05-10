@@ -5,7 +5,7 @@ export default {
             {
                 credentials: 'same-origin',
             }).then(response => {
-                return response.json();
+                return response;
             })
     },
 
@@ -47,7 +47,7 @@ export default {
             {
                 credentials: 'same-origin',
             }).then(response => {
-                //return response.json();
+
             });
     },
 
@@ -64,8 +64,17 @@ export default {
 
                 body: JSON.stringify(data)
             }).then(response => {
-                return response.json();
+                return response;
             });
+    },
+
+    likedPosts() {
+        return fetch(`/api/liked/posts`,
+            {
+                credentials: 'same-origin',
+            }).then(response => {
+                return response;
+            })
     },
 
     addPost(postData) {
@@ -81,7 +90,7 @@ export default {
 
                 body: JSON.stringify(postData)
             }).then(response => {
-                return response.json();
+                return response;
             });
     },
 }

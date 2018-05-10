@@ -11,7 +11,9 @@ import {
     POST_LIKE_SUCCESS,
     POST_LIKE_INCREMENT,
     ADD_POST_REQUEST,
-    ADD_POST_SUCCESS
+    ADD_POST_SUCCESS,
+    LIKED_POSTS_REQUEST,
+    LIKED_POSTS_SUCCESS
 } from './types';
 
 export default {
@@ -60,6 +62,15 @@ export default {
     postLikeSuccess: post => ({
         type: POST_LIKE_SUCCESS,
         payload: post
+    }),
+
+    likedPostsRequest: () => ({
+        type: LIKED_POSTS_REQUEST
+    }),
+
+    likedPostsSuccess: likedPosts => ({
+        type: LIKED_POSTS_SUCCESS,
+        payload: likedPosts
     }),
 
     addPostRequest: postData => ({

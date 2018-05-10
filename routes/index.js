@@ -15,4 +15,5 @@ router.get('/api/posts', PostController.showAllPosts);
 
 /*PostLikes*/
 router.post('/api/post/like', AuthController.ensureSignedIn, PostController.savePostLike, PostController.updateCount);
+router.get('/api/liked/posts', AuthController.ensureSignedIn, PostController.likedPosts);
 module.exports = router;
