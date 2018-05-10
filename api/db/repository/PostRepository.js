@@ -23,10 +23,14 @@ module.exports = {
     },
 
     async savePostLike(postLike) {
+        const existPostLike = await PostLike.find({ where: postLike });
+        if (existPostLike) {
+            return existPostLike;
+        }
         PostLike.create(postLike);
     },
 
-    async updateCount(postId) {
+    async updateCount(postId, count) {
         const post = await Post.findById(postId, {
             include: [{
                 model: User,
@@ -34,7 +38,7 @@ module.exports = {
             }]
         }
         );
-        return post.increment('like_count', { by: 1 })
+        return post.increment('like_count', { by: count })
     },
 
     async likedPosts(options) {

@@ -15,12 +15,16 @@ module.exports = {
     },
 
     async savePostLike(req, res, next) {
-        PostRepository.savePostLike({ ...req.body, user_id: req.user.id });
+        const result = await PostRepository.savePostLike({ ...req.body, user_id: req.user.id });
+        res.locals.count = 1;
+        if (result) {
+            res.locals.count = 0;
+        }
         return next();
     },
 
     async updateCount(req, res, next) {
-        const result = await PostRepository.updateCount(req.body.post_id);
+        const result = await PostRepository.updateCount(req.body.post_id, res.locals.count);
         res.json(result);
     },
 
