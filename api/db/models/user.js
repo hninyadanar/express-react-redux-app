@@ -13,6 +13,10 @@ module.exports = function (sequelize, DataTypes) {
         password: {
             type: DataTypes.STRING,
             notEmpty: true
+        },
+        image: {
+            type: DataTypes.STRING,
+            notEmpty: true
         }
     }, {
             underscored: true,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PostList from '../components/PostList';
 import actions from '../actions';
 import NewPost from './NewPost';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Avatar } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 
 class PostListData extends React.Component {
@@ -24,6 +24,7 @@ class PostListData extends React.Component {
     }
 
     render() {
+        console.log('-- user image in post list data --', this.props.user.image);
         const content = this.props.fetching ? <div> Fetching .... </div> : <PostList posts={this.props.posts} likedPosts={this.props.likedPosts} />;
         return (
             <Layout>
@@ -44,6 +45,9 @@ class PostListData extends React.Component {
                 </Sider>
 
                 <Layout style={{ marginLeft: 200 }}>
+                    <Header style={{ textAlign: 'right' }}>
+                        <Avatar size="large" src='/api/user/profile' />
+                    </Header>
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                         <NewPost />
                         <div style={{ padding: 24, background: '#fff', textAlign: 'left' }}>
@@ -63,7 +67,8 @@ const mapStateToProps = (state, ownProps) => ({
     posts: state.rootReducer.posts.list,
     fetching: state.rootReducer.posts.fetching,
     fetched: state.rootReducer.posts.fetchSuccess,
-    likedPosts: state.rootReducer.posts.likedPosts
+    likedPosts: state.rootReducer.posts.likedPosts,
+    user: state.rootReducer.authenticate.user
 })
 
 const mapDispatchToProps = dispatch => ({

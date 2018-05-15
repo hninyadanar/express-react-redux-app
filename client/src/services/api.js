@@ -10,16 +10,18 @@ export default {
     },
 
     signup(formdata) {
+        console.log('---- formdata file -----', formdata.file);
+        const data = new FormData();
+        data.append("username", formdata.username);
+        data.append("email", formdata.email);
+        data.append("password", formdata.password);
+        data.append("file", formdata.file);
+
         return fetch('/api/signup',
             {
                 method: 'POST',
-                headers: {
-                    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-                    //'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-                    'content-type': 'application/json'
-                },
-
-                body: JSON.stringify(formdata)
+                credentials: 'same-origin',
+                body: data
             }).then(response => {
                 return response;
             });
@@ -47,7 +49,7 @@ export default {
             {
                 credentials: 'same-origin',
             }).then(response => {
-
+                return response;
             });
     },
 

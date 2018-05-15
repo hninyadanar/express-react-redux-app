@@ -32,14 +32,15 @@ app.use('/users', usersRouter);
 app.post('/api/login', passport.authenticate('local', { failureRedirect: '/api/login' }),
   (req, res) => {
     res.cookie('authenticated', true);
-    res.json({ message: "Login Successful" });
-    //res.redirect('/post');
+    //res.json({ message: "Login Successful" });
+    res.json(req.user);
   });
 
 app.get('/api/logout',
   (req, res) => {
-    res.cookie('authenticated', false);
-    res.json({ message: "Logout Successful" });
+    req.logout();
+    res.json({});
+
   });
 
 // catch 404 and forward to error handler

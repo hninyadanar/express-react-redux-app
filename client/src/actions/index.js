@@ -13,7 +13,11 @@ import {
     ADD_POST_REQUEST,
     ADD_POST_SUCCESS,
     LIKED_POSTS_REQUEST,
-    LIKED_POSTS_SUCCESS
+    LIKED_POSTS_SUCCESS,
+    IMAGE_UPLOAD_REQUEST,
+    IMAGE_UPLOAD_SUCCESS,
+    USER_INFO_REQUEST,
+    USER_INFO_SUCCESS
 } from './types';
 
 export default {
@@ -33,7 +37,7 @@ export default {
     }),
 
     loginSuccess: () => ({
-        type: LOGIN_SUCCESS
+        type: LOGIN_SUCCESS,
     }),
 
     logoutRequest: authenticate => ({
@@ -41,8 +45,9 @@ export default {
         payload: authenticate
     }),
 
-    logoutSuccess: () => ({
-        type: LOGOUT_SUCCESS
+    logoutSuccess: (user) => ({
+        type: LOGOUT_SUCCESS,
+        payload: user
     }),
 
     postsFetchRequest: () => ({
@@ -81,5 +86,14 @@ export default {
     addPostSuccess: newPost => ({
         type: ADD_POST_SUCCESS,
         payload: newPost
-    })
+    }),
+
+    // userInfoRequest: () => ({
+    //     type: USER_INFO_REQUEST
+    // }),
+
+    // userInfoSuccess: user => ({
+    //     type: USER_INFO_SUCCESS,
+    //     payload: user
+    // })
 }

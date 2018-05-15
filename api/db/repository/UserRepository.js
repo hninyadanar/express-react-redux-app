@@ -17,6 +17,4 @@ module.exports = {
         return User.findOne(
             { where: { id: id } })
     }
-
-
 }

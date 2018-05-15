@@ -1,21 +1,42 @@
 
 import React from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, Upload } from 'antd';
 const FormItem = Form.Item;
 
 class SignupForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.uploadedFile = '';
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log('----------------', this.props);
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
+      values['file'] = this.uploadedFile;
       this.props.handleSubmit(values);
     });
 
   }
+
   render() {
+
     const { getFieldDecorator } = this.props.form;
+    const props = {
+      name: 'file',
+      action: '//jsonplaceholder.typicode.com/posts/',
+      beforeUpload: (file) => {
+        // this.props.beforeUpload(file);
+        this.uploadedFile = file;
+        return false;
+      },
+    };
+
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
@@ -38,6 +59,13 @@ class SignupForm extends React.Component {
           })(
             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
           )}
+        </FormItem>
+        <FormItem>
+          <Upload {...props}>
+            <Button>
+              <Icon type="upload" /> Upload Image
+              </Button>
+          </Upload>
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit" className="login-form-button">

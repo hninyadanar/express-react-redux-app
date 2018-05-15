@@ -23,9 +23,11 @@ function* fetchPosts() {
         const result = yield call(api.fetchPosts);
         if (result.status === 401 || result.status === 403) {
             yield put(push('/login'));
+        } else {
+            const posts = yield result.json();
+            yield put({ type: POSTS_FETCHED, payload: posts });
         }
-        const posts = yield result.json();
-        yield put({ type: POSTS_FETCHED, payload: posts });
+
     } catch (err) {
 
     }
@@ -52,7 +54,8 @@ function* watchSignup() {
 function* login(loginData) {
     try {
         const result = yield call(api.login, loginData.payload);
-        yield put({ type: LOGIN_SUCCESS });
+        const user = yield result.json();
+        yield put({ type: LOGIN_SUCCESS, payload: user });
         yield put(push('/posts'));
     } catch (err) {
 
@@ -83,8 +86,11 @@ function* postLike(data) {
         if (result.status === 401 || result.status === 403) {
             yield put(push('/login'));
         }
-        const post = yield result.json();
-        yield put({ type: POST_LIKE_SUCCESS, payload: post });
+        else {
+            const post = yield result.json();
+            yield put({ type: POST_LIKE_SUCCESS, payload: post });
+        }
+
     } catch (err) {
 
     }
@@ -100,8 +106,11 @@ function* likedPosts() {
         if (result.status === 401 || result.status === 403) {
             yield put(push('/login'));
         }
-        const likedPost = yield result.json();
-        yield put({ type: LIKED_POSTS_SUCCESS, payload: likedPost });
+        else {
+            const likedPost = yield result.json();
+            yield put({ type: LIKED_POSTS_SUCCESS, payload: likedPost });
+        }
+
 
     } catch (err) {
 
@@ -117,9 +126,10 @@ function* addPost(postData) {
         const result = yield call(api.addPost, postData.payload);
         if (result.status === 401 || result.status === 403) {
             yield put(push('/login'));
+        } else {
+            const newPost = yield result.json();
+            yield put({ type: ADD_POST_SUCCESS, payload: newPost });
         }
-        const newPost = yield result.json();
-        yield put({ type: ADD_POST_SUCCESS, payload: newPost });
     } catch (err) {
         //error handling
     }

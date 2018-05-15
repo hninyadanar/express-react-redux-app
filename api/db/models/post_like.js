@@ -2,12 +2,11 @@
 const sequelize = require('sequelize')
 
 module.exports = function (sequelize, DataTypes) {
-    var postLike = sequelize.define('PostLike',{
-       
+    var postLike = sequelize.define('PostLike', {
     }, {
-        underscored: true,
-        tableName: 'post_likes'
-    });
+            underscored: true,
+            tableName: 'post_likes'
+        });
 
     postLike.associate = function (models) {
         postLike.belongsTo(models.User, { as: 'user' });
