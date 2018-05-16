@@ -15,10 +15,19 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
+        unique: true,
         allowNull: false
       },
       password: {
         type: Sequelize.STRING,
+        notEmpty: true
+      },
+      gender: {
+        type: Sequelize.STRING,
+        notEmpty: true
+      },
+      birthday: {
+        type: Sequelize.DATEONLY,
         notEmpty: true
       },
       image: {

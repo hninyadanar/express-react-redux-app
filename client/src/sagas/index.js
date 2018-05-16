@@ -13,7 +13,10 @@ import {
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LIKED_POSTS_REQUEST,
-    LIKED_POSTS_SUCCESS
+    LIKED_POSTS_SUCCESS,
+    PROFILE_FETCH_SUCCESS,
+    PROFILE_FETCH_REQUEST,
+    CHANGE_CONTENT
 } from '../actions/types';
 import api from '../services/api';
 import { push } from 'react-router-redux';
@@ -54,9 +57,8 @@ function* watchSignup() {
 function* login(loginData) {
     try {
         const result = yield call(api.login, loginData.payload);
-        const user = yield result.json();
-        yield put({ type: LOGIN_SUCCESS, payload: user });
-        yield put(push('/posts'));
+        yield put({ type: LOGIN_SUCCESS });
+        yield put(push('/'));
     } catch (err) {
 
     }
@@ -139,6 +141,33 @@ function* watchAddPost() {
     yield takeEvery(ADD_POST_REQUEST, addPost);
 }
 
+function* profile() {
+    try {
+        const result = yield call(api.profile);
+        if (result.status === 401 || result.status === 403) {
+            yield put(push('/login'));
+        } else {
+            const profile = yield result.json();
+            yield put({ type: PROFILE_FETCH_SUCCESS, payload: profile });
+        }
+
+    } catch (err) {
+
+    }
+}
+
+function* watchProfile() {
+    yield takeEvery(PROFILE_FETCH_REQUEST, profile);
+}
+
+function* changeContent() {
+
+}
+
+function* watchChangeContent() {
+    yield takeEvery('CHANGE_CONTENT', changeContent);
+}
+
 export default function* rootSaga() {
     yield all([watchFetchPosts(),
     watchSignup(),
@@ -146,5 +175,7 @@ export default function* rootSaga() {
     watchLogout(),
     watchPostLike(),
     watchLikedPosts(),
-    watchAddPost()]);
+    watchAddPost(),
+    watchProfile(),
+    watchChangeContent()]);
 }

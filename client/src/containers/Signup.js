@@ -14,7 +14,7 @@ class Signup extends React.Component {
         return (
             <Row type="flex" justify="center" align="middle" style={{ paddingTop: '30px' }} >
                 <Col>
-                    <div id="loginFormContainer" style={{ padding: '10px', height: '400px', width: '350px', background: 'lightblue' }}>
+                    <div id="loginFormContainer" style={{ padding: '10px', height: '550px', width: '400px', background: 'lightblue' }}>
                         <h2> Signup </h2>
                         <SignupForm handleSubmit={formData => this.props.dispatch(actions.signupRequest(formData))} />
                     </div>

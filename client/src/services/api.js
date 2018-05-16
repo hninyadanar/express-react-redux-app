@@ -10,12 +10,10 @@ export default {
     },
 
     signup(formdata) {
-        console.log('---- formdata file -----', formdata.file);
         const data = new FormData();
-        data.append("username", formdata.username);
-        data.append("email", formdata.email);
-        data.append("password", formdata.password);
-        data.append("file", formdata.file);
+        for (var key in formdata) {
+            data.append(key, formdata[key]);
+        }
 
         return fetch('/api/signup',
             {
@@ -95,4 +93,13 @@ export default {
                 return response;
             });
     },
+
+    profile() {
+        return fetch(`/api/profile`,
+            {
+                credentials: 'same-origin',
+            }).then(response => {
+                return response;
+            })
+    }
 }

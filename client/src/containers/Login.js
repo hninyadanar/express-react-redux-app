@@ -12,7 +12,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <Row type="flex" justify="center" align="middle" style={{paddingTop: '30px'}} >
+            <Row type="flex" justify="center" align="middle" style={{ paddingTop: '30px' }} >
                 <Col>
                     <div id="loginFormContainer" style={{ padding: '10px', height: '400px', width: '350px', background: 'lightblue' }}>
                         <h2> Login </h2>

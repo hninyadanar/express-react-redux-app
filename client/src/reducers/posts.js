@@ -6,7 +6,8 @@ import {
     POST_LIKE_REQUEST,
     POST_LIKE_SUCCESS,
     LIKED_POSTS_REQUEST,
-    LIKED_POSTS_SUCCESS
+    LIKED_POSTS_SUCCESS,
+    CHANGE_CONTENT
 } from '../actions/types';
 import { stat } from 'fs';
 

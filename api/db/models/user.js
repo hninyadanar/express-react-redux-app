@@ -8,10 +8,19 @@ module.exports = function (sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false
         },
         password: {
             type: DataTypes.STRING,
+            notEmpty: true
+        },
+        gender: {
+            type: DataTypes.STRING,
+            notEmpty: true
+        },
+        birthday: {
+            type: DataTypes.DATEONLY,
             notEmpty: true
         },
         image: {

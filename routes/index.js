@@ -8,7 +8,10 @@ const AuthController = require('../api/controllers/AuthController');
 
 /*SignUp*/
 router.post('/api/signup', UserController.saveImageFile, UserController.signUp);
-router.get('/api/user/profile', UserController.findImage);
+router.get('/api/user/profile/:userId', UserController.findImage);
+
+/*Profile*/
+router.get('/api/profile', AuthController.ensureSignedIn, UserController.getProfile);
 
 /*Post*/
 router.post('/api/post/create', PostController.savePost);

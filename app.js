@@ -32,6 +32,7 @@ app.use('/users', usersRouter);
 app.post('/api/login', passport.authenticate('local', { failureRedirect: '/api/login' }),
   (req, res) => {
     res.cookie('authenticated', true);
+    res.cookie('userId', req.user.id);
     //res.json({ message: "Login Successful" });
     res.json(req.user);
   });

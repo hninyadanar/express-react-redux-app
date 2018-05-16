@@ -16,8 +16,9 @@ import {
     LIKED_POSTS_SUCCESS,
     IMAGE_UPLOAD_REQUEST,
     IMAGE_UPLOAD_SUCCESS,
-    USER_INFO_REQUEST,
-    USER_INFO_SUCCESS
+    PROFILE_FETCH_REQUEST,
+    PROFILE_FETCH_SUCCESS,
+    CHANGE_CONTENT
 } from './types';
 
 export default {
@@ -37,7 +38,7 @@ export default {
     }),
 
     loginSuccess: () => ({
-        type: LOGIN_SUCCESS,
+        type: LOGIN_SUCCESS
     }),
 
     logoutRequest: authenticate => ({
@@ -88,12 +89,17 @@ export default {
         payload: newPost
     }),
 
-    // userInfoRequest: () => ({
-    //     type: USER_INFO_REQUEST
-    // }),
+    profileFetchRequest: () => ({
+        type: PROFILE_FETCH_REQUEST
+    }),
 
-    // userInfoSuccess: user => ({
-    //     type: USER_INFO_SUCCESS,
-    //     payload: user
-    // })
+    profileFetchSuccess: (profile) => ({
+        type: PROFILE_FETCH_SUCCESS,
+        payload: profile
+    }),
+
+    changeContent: (key) => ({
+        type: CHANGE_CONTENT,
+        menuItem: key
+    })
 }

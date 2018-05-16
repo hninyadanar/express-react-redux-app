@@ -1,4 +1,5 @@
 const multer = require('multer');
+const moment = require('moment');
 var models = require('../db/models');
 const UserRepository = require('../db/repository/UserRepository');
 var path = require('path');
@@ -39,12 +40,20 @@ module.exports = {
     },
 
     async findImage(req, res, next) {
-        const result = await UserRepository.findById(req.user.id);
+        const result = await UserRepository.findById(req.params.userId);
         if (result) {
             console.log('image found');
         }
         console.log('---- image -----', result.image);
         res.sendFile(result.image);
+    },
+
+    async getProfile(req, res, next) {
+        const profile = await UserRepository.findById(req.user.id);
+        if (profile) {
+            console.log('--- profile ---', profile);
+        }
+        res.json(profile);
     }
 }
 

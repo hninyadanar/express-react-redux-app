@@ -10,7 +10,6 @@ export default function login(state = {
     loginSuccess: false,
     logoutRequest: false,
     logoutSuccess: false,
-    user: ''
 }, action) {
     switch (action.type) {
         case 'LOGIN_REQUEST':
@@ -18,7 +17,6 @@ export default function login(state = {
         case 'LOGIN_SUCCESS':
             return {
                 ...state,
-                user: action.payload,
                 loginSuccess: true
             }
 
