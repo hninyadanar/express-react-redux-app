@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import actions from '../actions';
-import { Icon, Button } from 'antd';
+import { Icon, Button, Avatar } from 'antd';
 import '../index.css';
 
 class Post extends React.Component {
@@ -33,8 +33,9 @@ class Post extends React.Component {
 
         return (
             <div>
+                <Avatar size="small" src={`/api/user/profile/${this.props.post.User.id}`} />
+                <font color="blue"> {this.props.post.User.username} </font> <br />
                 {this.props.post.content} <br />
-                created by <font color="blue"> {this.props.post.User.username} </font><br />
                 {icon}
                 <span>&nbsp;{this.props.post.like_count}</span>
             </div>

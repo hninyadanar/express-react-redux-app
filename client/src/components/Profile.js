@@ -1,13 +1,21 @@
 import React from 'react';
-import { Redirect } from 'react-router'
-import cookie from 'js-cookie'
+import { Redirect } from 'react-router';
+import cookie from 'js-cookie';
+import { Row, Col, Button, Modal } from 'antd';
+import EditForm from './EditForm';
 
 class Profile extends React.Component {
-
+    state = { visible: false }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
     render() {
         const userId = cookie.get('userId');
         return (
             <div style={{ padding: 24, textAlign: 'left' }}>
+
                 <table>
                     <tbody>
                         <tr>
@@ -31,10 +39,25 @@ class Profile extends React.Component {
                             <th> Birthday: </th>
                             <td> {this.props.profile.birthday} </td>
                         </tr>
+                        <tr>
+                            <td colSpan="2" align='right'> <Button onClick={this.showModal}> Edit </Button> </td>
+                        </tr>
                     </tbody>
                 </table>
+                <div>
+                    <Modal
+                        title="Edit Information"
+                        visible={this.state.visible}
+                        footer={[
+                            null, null,
+                        ]}
+                    >
+                        <EditForm info={this.props.profile} />
+                    </Modal>
+                </div>
 
-            </div>
+
+            </div >
         )
     }
 }
