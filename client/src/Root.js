@@ -8,6 +8,7 @@ import SignupPage from './containers/Signup'
 import MainPage from './containers/Main'
 import Logout from './components/Logout';
 import Profile from './containers/ProfileData';
+import PostDetail from './containers/PostDetail';
 
 function isLoggedIn() {
     console.log("COOKIE");
@@ -45,7 +46,7 @@ const Main = () => (
         <Route exact path='/logout' component={Logout} />
         <PrivateRoute component={MainPage} redirectTo="/login" exact path="/" />
         <PrivateRoute component={Profile} redirectTo="/login" exact path="/profile" />
-
+        <PrivateRoute  component={PostDetail} redirectTo="/login" exact path="/post/details/:postId" />
     </Switch>
 );
 

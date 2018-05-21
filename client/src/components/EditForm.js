@@ -6,22 +6,22 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 class EditForm extends React.Component {
+    state = {
+        value: 1,
+    }
 
     constructor(props) {
         super(props);
-        this.state = {
-            value: 'Male',
-        }
+
         this.uploadedFile = '';
     }
 
-    // componentWillMount() {
-    //     this.props.form.setFields({
-    //         username: {
-    //             value: this.props.info.username
-    //         },
-    //     });
-    // }
+    onChange = (e) => {
+        console.log('radio checked', e.target.value);
+        this.setState({
+            value: e.target.value,
+        });
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -55,10 +55,16 @@ class EditForm extends React.Component {
 
             <Form onSubmit={this.handleSubmit}>
                 <FormItem>
-                    <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} defaultValue="Hello User" />} />
+                    {getFieldDecorator('username', {
+                        initialValue: [this.props.info.username],
+                        rules: [{ required: true, message: 'Please input your name!' }],
+                    })(
+                        <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} />
+                    )}
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('email', {
+                        initialValue: [this.props.info.email],
                         rules: [{ required: true, message: 'Please input your email!' }],
                     })(
                         <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} />
@@ -66,6 +72,7 @@ class EditForm extends React.Component {
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('password', {
+                        initialValue: [this.props.info.password],
                         rules: [{ required: true, message: 'Please input your Password!' }],
                     })(
                         <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" />
@@ -75,9 +82,9 @@ class EditForm extends React.Component {
                     {getFieldDecorator('gender', {
                         rules: [{ required: true, message: 'Please select gender!' }],
                     })(
-                        <RadioGroup>
-                            <Radio value="Male">Male</Radio>
-                            <Radio value="Female">Female</Radio>
+                        <RadioGroup onChange={this.onChange} value={this.state.value}>
+                            <Radio value={1}>A</Radio>
+                            <Radio value={2}>B</Radio>
                         </RadioGroup>
                     )}
                 </FormItem>
@@ -85,7 +92,7 @@ class EditForm extends React.Component {
                     {getFieldDecorator('birthday', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
-                        <DatePicker />
+                        <DatePicker defaultValue={moment(this.props.info.birthday)} />
                     )}
                 </FormItem>
                 <FormItem>

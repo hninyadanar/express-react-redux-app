@@ -1,18 +1,31 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import cookie from 'js-cookie';
+import moment from 'moment';
 import { Row, Col, Button, Modal } from 'antd';
 import EditForm from './EditForm';
 
+
 class Profile extends React.Component {
     state = { visible: false }
+
     showModal = () => {
         this.setState({
             visible: true,
         });
     }
+
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
+
+
     render() {
         const userId = cookie.get('userId');
+
         return (
             <div style={{ padding: 24, textAlign: 'left' }}>
 
@@ -44,18 +57,18 @@ class Profile extends React.Component {
                         </tr>
                     </tbody>
                 </table>
+
                 <div>
                     <Modal
                         title="Edit Information"
                         visible={this.state.visible}
-                        footer={[
-                            null, null,
-                        ]}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
                     >
                         <EditForm info={this.props.profile} />
+
                     </Modal>
                 </div>
-
 
             </div >
         )

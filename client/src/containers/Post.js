@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import actions from '../actions';
 import { Icon, Button, Avatar } from 'antd';
+import { Link } from 'react-router-dom';
 import '../index.css';
 
 class Post extends React.Component {
@@ -18,8 +19,6 @@ class Post extends React.Component {
         this.props.dispatch(actions.postLikeRequest(data));
     }
 
-
-
     render() {
         const likedPosts = this.props.likedPosts;
         const likedPost = likedPosts.find(
@@ -34,10 +33,14 @@ class Post extends React.Component {
         return (
             <div>
                 <Avatar size="small" src={`/api/user/profile/${this.props.post.User.id}`} />
-                <font color="blue"> {this.props.post.User.username} </font> <br />
-                {this.props.post.content} <br />
+                <font color="blue"> {this.props.post.User.username} </font> <br /><br />
+                {this.props.post.content} <br /><br />
                 {icon}
                 <span>&nbsp;{this.props.post.like_count}</span>
+                <span>&nbsp;&nbsp;</span>
+                <Link to={`/post/details/${this.props.post.id}`}>
+                    <Icon type="profile" /> details
+                </Link>
             </div>
         )
 

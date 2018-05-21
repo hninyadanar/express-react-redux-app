@@ -18,7 +18,13 @@ import {
     IMAGE_UPLOAD_SUCCESS,
     PROFILE_FETCH_REQUEST,
     PROFILE_FETCH_SUCCESS,
-    CHANGE_CONTENT
+    CHANGE_CONTENT,
+    FETCH_POST_DETAILS_REQUEST,
+    FETCH_POST_DETAILS_SUCCESS,
+    ADD_COMMENT_REQUEST,
+    ADD_COMMENT_SUCCESS,
+    COMMENT_FETCH_REQUEST,
+    COMMENT_FETCH_SUCCESS
 } from './types';
 
 export default {
@@ -89,6 +95,16 @@ export default {
         payload: newPost
     }),
 
+    fetchPostDetailsRequest: postId => ({
+        type: FETCH_POST_DETAILS_REQUEST,
+        payload: postId
+    }),
+
+    fetchPostDetailsSuccess: (postDetail) => ({
+        type: FETCH_POST_DETAILS_SUCCESS,
+        payload: postDetail
+    }),
+
     profileFetchRequest: () => ({
         type: PROFILE_FETCH_REQUEST
     }),
@@ -101,5 +117,25 @@ export default {
     changeContent: (key) => ({
         type: CHANGE_CONTENT,
         menuItem: key
+    }),
+
+    addCommentRequest: comment => ({
+        type: ADD_COMMENT_REQUEST,
+        payload: comment
+    }),
+
+    addCommentSuccess: (comment) => ({
+        type: ADD_COMMENT_SUCCESS,
+        payload: comment
+    }),
+
+    commentFetchRequest: (postId) => ({
+        type: COMMENT_FETCH_REQUEST,
+        payload: postId
+    }),
+
+    commentFetchSuccess: (comments) => ({
+        type: COMMENT_FETCH_SUCCESS,
+        payload: comments
     })
 }

@@ -10,6 +10,7 @@ import { Layout, Menu, Icon, Avatar, Row, Col, Tooltip } from 'antd';
 import NewPost from './NewPost';
 import Profile from './ProfileData';
 import Posts from './PostListData';
+import Detail from './PostDetail';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -38,7 +39,9 @@ class Main extends React.Component {
         if (menuItem == 2) {
             currentPage = <Profile />
         }
-
+        if (menuItem == 3) {
+            currentPage = <Detail />
+        }
 
         return (
             <Layout>

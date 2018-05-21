@@ -2,6 +2,7 @@ var models = require('../models');
 const User = models.User;
 const Post = models.Post;
 const PostLike = models.PostLike;
+const Comment = models.Comment;
 
 module.exports = {
 
@@ -43,7 +44,16 @@ module.exports = {
 
     async likedPosts(options) {
         return PostLike.findAll(options);
-    }
+    },
 
+    async getPostDetails(postId) {
+        return Post.findById(postId, {
+            include: [{
+                model: User,
+                required: true
+            }]
+        }
+        );
+    }
 }
 

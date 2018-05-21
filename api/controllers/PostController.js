@@ -34,6 +34,11 @@ module.exports = {
             attributes: ['post_id']
         });
         res.json(result);
-    }
+    },
+
+    async postDetails(req, res, next) {
+        const result = await PostRepository.getPostDetails(req.params.postId);
+        res.json(result);
+    },
 }
 

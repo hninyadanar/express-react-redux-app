@@ -1,14 +1,5 @@
 export default {
 
-    fetchPosts() {
-        return fetch(`/api/posts`,
-            {
-                credentials: 'same-origin',
-            }).then(response => {
-                return response;
-            })
-    },
-
     signup(formdata) {
         const data = new FormData();
         for (var key in formdata) {
@@ -49,6 +40,15 @@ export default {
             }).then(response => {
                 return response;
             });
+    },
+
+    fetchPosts() {
+        return fetch(`/api/posts`,
+            {
+                credentials: 'same-origin',
+            }).then(response => {
+                return response;
+            })
     },
 
     postLike(data) {
@@ -94,11 +94,46 @@ export default {
             });
     },
 
+    postDetail(postId) {
+        return fetch(`/api/post/details/${postId}`,
+            {
+                credentials: 'same-origin',
+            });
+    },
+
     profile() {
         return fetch(`/api/profile`,
             {
                 credentials: 'same-origin',
             }).then(response => {
+                return response;
+            })
+    },
+
+    addComment(comment) {
+        return fetch(`/api/posts/${comment.postId}/comment/create`,
+            {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                    //'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                    'content-type': 'application/json'
+                },
+
+                body: JSON.stringify(comment)
+            }).then(response => {
+                return response;
+            });
+    },
+
+    fetchComments(postId) {
+        return fetch(`/api/posts/${postId}/comments`,
+            {
+                credentials: 'same-origin',
+            }).then(response => {
+                console.log("*******API SERVICE******");
+                console.log(response);
                 return response;
             })
     }

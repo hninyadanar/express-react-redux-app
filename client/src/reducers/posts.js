@@ -22,6 +22,7 @@ export default function posts(state = {
     likedPostsRequest: false,
     likedPostsSuccess: false,
     likedPosts: [],
+    detailLikedPost: ''
 }, action) {
     switch (action.type) {
         case POSTS_FETCH_REQUEST:
@@ -53,6 +54,7 @@ export default function posts(state = {
                 ...state,
                 likedPostId: action.payload.id,
                 likedPosts: [...state.likedPosts, likedPost],
+                detailLikedPost: action.payload,
                 list: [...posts],
             }
 
