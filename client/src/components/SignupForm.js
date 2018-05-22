@@ -59,7 +59,8 @@ class SignupForm extends React.Component {
     console.log('---- email check ----', this.props.existEmail);
     let emailConfirmMessage = null;
     if (this.props.existEmail === true) {
-      alert("Please Choose other email");
+      console.log('duplicate email');
+      //alert("Please Choose other email");
       //emailConfirmMessage = "This email cannot be used";
     };
 

@@ -44,6 +44,13 @@ app.get('/api/logout',
 
   });
 
+var fs = require('fs');
+var dir = './uploads';
+
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
+}
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
