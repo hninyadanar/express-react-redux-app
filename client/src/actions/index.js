@@ -24,7 +24,9 @@ import {
     ADD_COMMENT_REQUEST,
     ADD_COMMENT_SUCCESS,
     COMMENT_FETCH_REQUEST,
-    COMMENT_FETCH_SUCCESS
+    COMMENT_FETCH_SUCCESS,
+    CHECK_EXISTING_EMAIL,
+    EXISTING_EMAIL
 } from './types';
 
 export default {
@@ -137,5 +139,14 @@ export default {
     commentFetchSuccess: (comments) => ({
         type: COMMENT_FETCH_SUCCESS,
         payload: comments
+    }),
+
+    checkExistingEmail: (email) => ({
+        type: CHECK_EXISTING_EMAIL,
+        payload: email
+    }),
+
+    ExistingEmail: () => ({
+        type: EXISTING_EMAIL
     })
 }

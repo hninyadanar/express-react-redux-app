@@ -29,5 +29,8 @@ router.get('/api/post/details/:postId', AuthController.ensureSignedIn, PostContr
 router.post('/api/posts/:postId/comment/create', AuthController.ensureSignedIn, CommentController.saveComment);
 router.get('/api/posts/:postId/comments', AuthController.ensureSignedIn, CommentController.showComments);
 
+/*Email Check*/
+router.post('/api/check/exist/email', UserController.checkExistingEmail);
+
 
 module.exports = router;

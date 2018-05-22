@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import actions from '../actions';
-import { Icon, Button, Avatar } from 'antd';
+import { Icon, Button, Avatar, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import CommentForm from '../components/CommentForm';
 import '../index.css';
@@ -62,7 +62,9 @@ class Details extends React.Component {
                 {icon}
                 <span>&nbsp;{post.like_count}</span>
                 <span>&nbsp;&nbsp;</span>
-                <span onClick={this.showCommentForm} > <Icon type="message" /> Comment </span>
+                <Tooltip title="Comment Here">
+                    <span onClick={this.showCommentForm} > <Icon type="message" /> Comment </span>
+                </Tooltip>
                 <CommentForm postId={post.id} commentInfo={formData => this.props.dispatch(actions.addCommentRequest(formData))} />
             </div>
         )

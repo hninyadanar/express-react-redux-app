@@ -54,6 +54,14 @@ module.exports = {
             console.log('--- profile ---', profile);
         }
         res.json(profile);
+    },
+
+    async checkExistingEmail(req, res, next) {
+        const result = await UserRepository.findByEmail(req.body.email);
+        if (result) {
+            res.status(401).json({ message: 'duplicate email' });
+        }
+        res.json("email does not exist");
     }
 }
 

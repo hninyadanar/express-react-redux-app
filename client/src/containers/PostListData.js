@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { Layout, Menu, Icon, Avatar } from 'antd';
 import Profile from './ProfileData';
-const { Header, Content, Footer, Sider } = Layout;
+import MainHeader from './MainHeader';
 
 class PostListData extends React.Component {
 
@@ -22,19 +22,22 @@ class PostListData extends React.Component {
     }
 
     render() {
-        const content = this.props.fetching ? <div> Fetching .... </div> : <PostList posts={this.props.posts} likedPosts={this.props.likedPosts} />;
+        const contentPostList = <div>
+            <NewPost />
+            <div style={{ padding: 24, background: '#fff', textAlign: 'left' }}>
+                <PostList posts={this.props.posts} likedPosts={this.props.likedPosts} />
+            </div>
+        </div>
+
 
         return (
-            <div>
-                <NewPost />
-                <div style={{ padding: 24, background: '#fff', textAlign: 'left' }}>
-                    {content}
-                </div>
-            </div>
+            <MainHeader content={contentPostList} history={this.props.history} />
 
         )
     }
 }
+
+
 
 const mapStateToProps = (state, ownProps) => ({
     posts: state.rootReducer.posts.list,

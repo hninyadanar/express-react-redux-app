@@ -14,7 +14,7 @@ import Detail from './PostDetail';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-class Main extends React.Component {
+class MainHeader extends React.Component {
 
     constructor(props) {
         super(props);
@@ -29,20 +29,18 @@ class Main extends React.Component {
 
     clickMenuItem(item) {
         this.props.changeComponent(item);
+        if (item == 1) {
+            this.props.history.push("/posts");
+        }
+        if (item == 2) {
+            this.props.history.push("/profile");
+        }
+        
     }
 
     render() {
         const userId = cookie.get('userId');
-        const menuItem = this.props.currentComponent;
-        const content = <Posts />
-        let currentPage = content;
-        if (menuItem == 2) {
-            currentPage = <Profile />
-        }
-        if (menuItem == 3) {
-            currentPage = <Detail />
-        }
-
+        const contentData = this.props.content;
         return (
             <Layout>
 
@@ -81,7 +79,7 @@ class Main extends React.Component {
                     </Sider>
 
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial', height: '80vh' }}>
-                        {currentPage}
+                        {contentData}
                     </Content>
 
                 </Layout>
@@ -104,4 +102,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Main)
+)(MainHeader)

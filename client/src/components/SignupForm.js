@@ -13,6 +13,17 @@ class SignupForm extends React.Component {
       value: 'Male',
     }
     this.uploadedFile = '';
+    this.checkEmail = this.checkEmail.bind(this);
+  }
+
+  checkEmail = (e) => {
+    e.preventDefault();
+    var validCheck = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (validCheck.test(String(e.target.value).toLowerCase())) {
+      console.log('--- email ---', e.target.value);
+      var data = { email: e.target.value };
+      this.props.checkEmail(data);
+    }
   }
 
   handleSubmit = (e) => {
@@ -24,13 +35,16 @@ class SignupForm extends React.Component {
       }
       values['file'] = this.uploadedFile;
       values['birthday'] = moment(values['birthday']).format('YYYY-MM-DD');
+      if (!values['file']) {
+        console.log(' **** NO PHOTO *** ');
+        alert("Please Choose Photo");
+      }
       this.props.handleSubmit(values);
     });
 
   }
 
   render() {
-
     const { getFieldDecorator } = this.props.form;
     const props = {
       name: 'file',
@@ -40,6 +54,13 @@ class SignupForm extends React.Component {
         this.uploadedFile = file;
         return false;
       },
+    };
+
+    console.log('---- email check ----', this.props.existEmail);
+    let emailConfirmMessage = null;
+    if (this.props.existEmail === true) {
+      alert("Please Choose other email");
+      //emailConfirmMessage = "This email cannot be used";
     };
 
     return (
@@ -55,8 +76,9 @@ class SignupForm extends React.Component {
           {getFieldDecorator('email', {
             rules: [{ required: true, message: 'Please input your email!' }],
           })(
-            <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
+            <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" onKeyUp={this.checkEmail} />
           )}
+          <span> {this.emailConfirmMessage} </span>
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
@@ -79,7 +101,7 @@ class SignupForm extends React.Component {
           {getFieldDecorator('birthday', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
-            <DatePicker />
+            <DatePicker placeholder="Birthday" />
           )}
         </FormItem>
         <FormItem>

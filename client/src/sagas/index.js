@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { call, put, takeEvery, takeLatest, all } from 'redux-saga/effects';
 import {
     POSTS_FETCH_REQUEST,
     POSTS_FETCHED,
@@ -21,17 +21,24 @@ import {
     FETCH_POST_DETAILS_REQUEST,
     ADD_COMMENT_SUCCESS,
     COMMENT_FETCH_REQUEST,
-    COMMENT_FETCH_SUCCESS
+    COMMENT_FETCH_SUCCESS,
+    CHECK_EXISTING_EMAIL,
+    EXISTING_EMAIL
 } from '../actions/types';
 import api from '../services/api';
 import { push } from 'react-router-redux';
+import { watch } from 'fs';
 
 /* ------------------- SignUp ----------------------- */
 function* signup(formdata) {
     try {
         const result = yield call(api.signup, formdata.payload);
-        yield put({ type: SIGN_UP, payload: result });
-        yield put(push('/login'));
+        if (result.status === 401) {
+            yield put(push('/signup'));
+        } else {
+            yield put({ type: SIGN_UP, payload: result });
+            yield put(push('/login'));
+        }
     } catch (err) {
 
     }
@@ -46,14 +53,14 @@ function* login(loginData) {
     try {
         const result = yield call(api.login, loginData.payload);
         yield put({ type: LOGIN_SUCCESS });
-        yield put(push('/'));
+        yield put(push('/posts'));
     } catch (err) {
 
     }
 }
 
 function* watchLogin() {
-    yield takeEvery(LOGIN_REQUEST, login);
+    yield takeLatest(LOGIN_REQUEST, login);
 }
 
 /* ------------------- Logout ----------------------- */
@@ -241,6 +248,23 @@ function* watchFetchComments() {
     yield takeEvery('COMMENT_FETCH_REQUEST', fetchComments)
 }
 
+
+/* ----------- check existing email ----------- */
+function* checkExistingEmail(email) {
+    try {
+        const result = yield call(api.checkExistingEmail, email.payload);
+        if (result.status === 401) {
+            yield put({ type: EXISTING_EMAIL });
+        }
+    } catch (err) {
+
+    }
+}
+
+function* watchCheckExistingEmail() {
+    yield takeEvery('CHECK_EXISTING_EMAIL', checkExistingEmail);
+}
+
 export default function* rootSaga() {
     yield all([watchFetchPosts(),
     watchSignup(),
@@ -253,6 +277,7 @@ export default function* rootSaga() {
     watchProfile(),
     watchChangeContent(),
     watchAddComment(),
-    watchFetchComments()
+    watchFetchComments(),
+    watchCheckExistingEmail()
     ]);
 }

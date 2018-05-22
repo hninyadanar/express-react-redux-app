@@ -16,7 +16,10 @@ class Signup extends React.Component {
                 <Col>
                     <div id="loginFormContainer" style={{ padding: '10px', height: '550px', width: '400px', background: 'lightblue' }}>
                         <h2> Signup </h2>
-                        <SignupForm handleSubmit={formData => this.props.dispatch(actions.signupRequest(formData))} />
+                        <SignupForm handleSubmit={formData => this.props.dispatch(actions.signupRequest(formData))}
+                            checkEmail={email => this.props.dispatch(actions.checkExistingEmail(email))}
+                            existEmail={this.props.existingEmail}
+                        />
                     </div>
                 </Col>
             </Row>
@@ -24,10 +27,15 @@ class Signup extends React.Component {
     }
 }
 
+const mapStateToProps = (state, ownProps) => ({
+    existingEmail: state.rootReducer.signup.existingEmail,
+})
+
 const mapDispatchToProps = dispatch => ({
     dispatch: action => dispatch(action)
 });
 
 export default connect(
+    mapStateToProps,
     mapDispatchToProps
 )(Signup)

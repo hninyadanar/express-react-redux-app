@@ -132,9 +132,25 @@ export default {
             {
                 credentials: 'same-origin',
             }).then(response => {
-                console.log("*******API SERVICE******");
                 console.log(response);
                 return response;
             })
+    },
+
+    checkExistingEmail(email) {
+        return fetch('/api/check/exist/email',
+            {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                    //'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                    'content-type': 'application/json'
+                },
+
+                body: JSON.stringify(email)
+            }).then(response => {
+                return response;
+            });
     }
 }

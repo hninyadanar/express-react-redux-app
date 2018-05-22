@@ -4,14 +4,17 @@ import actions from '../actions';
 import { Divider, Icon } from 'antd';
 import Details from './Details'
 import CommentForm from '../components/CommentForm';
-import Comments from './CommentList';
+import CommentList from './CommentList';
+import MainHeader from './MainHeader';
 import '../index.css';
 
 
 class PostDetail extends React.Component {
 
     componentDidMount() {
-        this.props.dispatch(actions.fetchPostDetailsRequest(this.props.match.params.postId));
+        const postId = this.props.match.params.postId;
+        this.props.dispatch(actions.fetchPostDetailsRequest(postId));
+        this.props.dispatch(actions.commentFetchRequest(postId));
     }
 
     render() {
@@ -21,25 +24,25 @@ class PostDetail extends React.Component {
         let comments = null;
         if (details) {
             content = <Details post={details} />
-            comments = <Comments postId={details.id} />
+            comments = <CommentList comments={this.props.comments} />
         }
 
-        console.log(' detail page current component', this.props.currentComponent);
-
-        return (
+        const contentPostList =
             <div>
                 {content}
                 <Divider />
                 {comments}
-
             </div>
+
+        return (
+            <MainHeader content={contentPostList} history={this.props.history} />
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
     details: state.rootReducer.postDetail.details,
-    currentComponent: state.rootReducer.main.currentComponent
+    comments: state.rootReducer.comment.commentList,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -5,10 +5,10 @@ import cookie from 'js-cookie'
 import history from './history'
 import LoginPage from './containers/Login'
 import SignupPage from './containers/Signup'
-import MainPage from './containers/Main'
 import Logout from './components/Logout';
 import Profile from './containers/ProfileData';
 import PostDetail from './containers/PostDetail';
+import Posts from './containers/PostListData';
 
 function isLoggedIn() {
     console.log("COOKIE");
@@ -44,9 +44,9 @@ const Main = () => (
         <Route exact path='/login' component={LoginPage} />
         <Route exact path='/signup' component={SignupPage} />
         <Route exact path='/logout' component={Logout} />
-        <PrivateRoute component={MainPage} redirectTo="/login" exact path="/" />
+        <PrivateRoute component={Posts} redirectTo="/login" exact path="/posts" />
         <PrivateRoute component={Profile} redirectTo="/login" exact path="/profile" />
-        <PrivateRoute  component={PostDetail} redirectTo="/login" exact path="/post/details/:postId" />
+        <PrivateRoute component={PostDetail} redirectTo="/login" exact path="/post/details/:postId" />
     </Switch>
 );
 

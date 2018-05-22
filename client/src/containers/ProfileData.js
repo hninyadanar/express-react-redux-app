@@ -4,8 +4,7 @@ import actions from '../actions';
 import { Link } from 'react-router-dom';
 import cookie from 'js-cookie'
 import Profile from '../components/Profile';
-import { Layout, Menu, Icon, Avatar } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
+import MainHeader from './MainHeader';
 
 class ProfileData extends React.Component {
     componentDidMount() {
@@ -14,8 +13,10 @@ class ProfileData extends React.Component {
 
     render() {
         const userId = cookie.get('userId');
+        const contentPostList = <Profile profile={this.props.profile} />
+
         return (
-            <Profile profile={this.props.profile} />
+            <MainHeader content={contentPostList} history={this.props.history} />
         )
     }
 
@@ -32,6 +33,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
-    //mapLogoutDispatchToProps
+    mapDispatchToProps
 )(ProfileData)

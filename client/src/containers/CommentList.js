@@ -10,10 +10,6 @@ class CommentList extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        this.props.fetchComments(this.props.postId);
-    }
-
     render() {
         const comments = this.props.comments;
         return (
@@ -34,19 +30,4 @@ class CommentList extends React.Component {
     }
 }
 
-
-
-
-const mapStateToProps = (state, ownProps) => ({
-    comments: state.rootReducer.comment.commentList,
-})
-
-const mapDispatchToProps = dispatch => ({
-    fetchComments: (postId) => { dispatch(actions.commentFetchRequest(postId)) },
-});
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CommentList)
+export default CommentList
